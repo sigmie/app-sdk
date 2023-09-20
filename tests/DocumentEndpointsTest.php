@@ -128,6 +128,7 @@ class DocumentEndpointsTest extends TestCase
 
         $res = $client->deleteDocument($index, $id);
 
+        $this->assertEquals(202, $res->code());
         $this->assertEquals($id, $res->json('_id'));
 
         $res = $client->getDocument($index, $id);
