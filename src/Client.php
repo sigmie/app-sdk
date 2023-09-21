@@ -12,6 +12,7 @@ class Client
 {
     use Endpoints\Index;
     use Endpoints\Document;
+    use Endpoints\Batch;
 
     public JSONClientInterface $http;
 
