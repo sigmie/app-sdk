@@ -16,4 +16,11 @@ trait Batch
 
         return $this->http->request($req);
     }
+
+    public function batchWrite(string $index, array $body): JSONResponse
+    {
+        $req = new JSONRequest('PUT', new Uri("/v1/index/{$index}/batch"), $body);
+
+        return $this->http->request($req);
+    }
 }

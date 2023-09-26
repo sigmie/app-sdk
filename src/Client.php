@@ -13,6 +13,7 @@ class Client
     use Endpoints\Index;
     use Endpoints\Document;
     use Endpoints\Batch;
+    use Endpoints\Search;
 
     public JSONClientInterface $http;
 
@@ -24,15 +25,12 @@ class Client
         null|JSONClientInterface $http = null
     ) {
         $this->http = $http ?: JSONClient::createWithHeaders([
-            // "https://{$applicationId}-a.sigmie.app",
-            // "https://{$applicationId}-b.sigmie.app",
-            // "https://{$applicationId}-c.sigmie.app",
-            "http://local.phonix:8000"
+            "https://{$applicationId}-a.sigmie.app",
+            "https://{$applicationId}-b.sigmie.app",
+            "https://{$applicationId}-c.sigmie.app",
         ], [
-            // 'X-Sigmie-Application' => $this->applicationId,
-            // 'X-Sigmie-API-Key' => $this->apiKey
-            'X-Sigmie-Application' => 'shukij3ecqkr5tnfq',
-            'X-Sigmie-API-Key' => 'S3qL4gAd7vQsUq9v4JjDorZO43R7ua9e8Vg28v6R',
+            'X-Sigmie-Application' => $this->applicationId,
+            'X-Sigmie-API-Key' => $this->apiKey
         ], [
             'connect_timeout' => $this->timeout
         ]);

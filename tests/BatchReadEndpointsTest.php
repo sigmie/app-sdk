@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Sigmie\Application;
 
-class BatchEndpointsTest extends TestCase
+class BatchReadEndpointsTest extends TestCase
 {
     /**
      * @test
@@ -50,7 +50,7 @@ class BatchEndpointsTest extends TestCase
         $this->assertEquals([
             [
                 "error" => "document/not_found",
-                "message" => "A document with the _id '' couldn't be found."
+                "message" => "A document with the _id 'null' couldn't be found."
             ]
         ], $res->json());
 
