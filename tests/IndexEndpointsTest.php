@@ -12,6 +12,43 @@ class IndexEndpointsTest extends TestCase
     /**
      * @test
      */
+    public function update_index()
+    {
+        $client = new Client(
+            applicationId: getenv('SIGMIE_APPLICATION_ID'),
+            apiKey: getenv('SIGMIE_API_KEY')
+        );
+
+        $name = uniqid();
+
+        $res = $client->createIndex(name: $name);
+
+        $this->assertEquals(202, $res->psr()->getStatusCode());
+        $this->assertArrayHasKey('name', $res->json());
+        // $this->assertArrayHasKey('mappings', $res->json());
+        $this->assertEquals($name, $res->json('name'));
+
+        $res = $client->updateIndex(name: $name, body: [
+            'mappings' => [
+                [
+                    'type' => 'category',
+                    'name' => 'category'
+                ]
+            ]
+        ]);
+
+        $this->assertArrayHasKey('name', $res->json());
+        $this->assertArrayHasKey('mappings', $res->json());
+        $this->assertEquals(200, $res->psr()->getStatusCode());
+
+        $res = $client->deleteIndex($name);
+
+        $this->assertEquals(200, $res->psr()->getStatusCode());
+    }
+
+    /**
+     * @test
+     */
     public function delete_no_existing_index()
     {
         $client = new Client(
@@ -108,6 +145,6 @@ class IndexEndpointsTest extends TestCase
 
         $res = $client->http->request(new JSONRequest('PUT', new Uri('/not/existing-route')));
 
-        $this->assertEquals('route/not_found',$res->json('error'));
+        $this->assertEquals('route/not_found', $res->json('error'));
     }
 }

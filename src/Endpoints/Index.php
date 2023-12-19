@@ -11,6 +11,13 @@ use Sigmie\Http\JSONRequest;
 
 trait Index
 {
+    public function updateIndex(string $name, array $body = []): JSONResponse
+    {
+        $req = new JSONRequest('PUT', new Uri("/v1/index/{$name}"), $body);
+
+        return $this->http->request($req);
+    }
+
     public function createIndex(string $name): JSONResponse
     {
         $req = new JSONRequest('POST', new Uri("/v1/index/{$name}"));
