@@ -18,9 +18,9 @@ trait Index
         return $this->http->request($req);
     }
 
-    public function createIndex(string $name): JSONResponse
+    public function createIndex(string $name, array $body = []): JSONResponse
     {
-        $req = new JSONRequest('POST', new Uri("/v1/index/{$name}"));
+        $req = new JSONRequest('POST', new Uri("/v1/index/{$name}"), $body);
 
         return $this->http->request($req);
     }

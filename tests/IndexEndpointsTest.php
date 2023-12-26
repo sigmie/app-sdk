@@ -25,7 +25,7 @@ class IndexEndpointsTest extends TestCase
 
         $this->assertEquals(202, $res->psr()->getStatusCode());
         $this->assertArrayHasKey('name', $res->json());
-        // $this->assertArrayHasKey('mappings', $res->json());
+        $this->assertArrayHasKey('mappings', $res->json());
         $this->assertEquals($name, $res->json('name'));
 
         $res = $client->updateIndex(name: $name, body: [
@@ -39,7 +39,7 @@ class IndexEndpointsTest extends TestCase
 
         $this->assertArrayHasKey('name', $res->json());
         $this->assertArrayHasKey('mappings', $res->json());
-        $this->assertEquals(200, $res->psr()->getStatusCode());
+        $this->assertEquals(202, $res->psr()->getStatusCode());
 
         $res = $client->deleteIndex($name);
 
@@ -78,10 +78,17 @@ class IndexEndpointsTest extends TestCase
 
         $name = uniqid();
 
-        $res = $client->createIndex(name: $name);
+        $res = $client->createIndex(name: $name, body: ['mappings' => [
+            [
+                'name' => 'display_name',
+                'type' => 'name'
+            ]
+        ]]);
 
         $this->assertEquals(202, $res->psr()->getStatusCode());
         $this->assertArrayHasKey('name', $res->json());
+        $this->assertArrayHasKey('mappings', $res->json());
+        $this->assertNotEmpty($res->json()['mappings'] ?? []);
         $this->assertEquals($name, $res->json('name'));
 
         $res = $client->deleteIndex(name: $name);

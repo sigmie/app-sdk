@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Sigmie\Application;
 
-use PHP_CodeSniffer\Tokenizers\JS;
 use Sigmie\Application\Enums\BatchWriteAction;
 
 class BatchWriteEndpointsTest extends TestCase

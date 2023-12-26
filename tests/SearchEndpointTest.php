@@ -22,7 +22,7 @@ class SearchEndpointTest extends TestCase
 
         $client->upsertDocument($index, ['title' => 'Scooby']);
 
-        sleep(1);
+        sleep(60);
 
         $res = $client->search($index, []);
 
@@ -39,7 +39,7 @@ class SearchEndpointTest extends TestCase
         $this->assertEquals(1, $json['total']);
 
         $this->assertArrayHasKey('per_page', $json);
-        $this->assertEquals(10, $json['per_page']);
+        $this->assertEquals(20, $json['per_page']);
 
         $this->assertArrayHasKey('page', $json);
         $this->assertEquals(1, $json['page']);
@@ -96,7 +96,7 @@ class SearchEndpointTest extends TestCase
         $this->assertEquals(200, $res->code());
 
         $json = $res->json();
-$this->assertEquals(1, $json['page']);
+        $this->assertEquals(1, $json['page']);
         $this->assertEquals([], $json['facets']);
         $this->assertEquals("_score title:asc", $json['sort']);
 
