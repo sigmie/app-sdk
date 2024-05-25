@@ -18,6 +18,15 @@ trait Index
         return $this->http->request($req);
     }
 
+    public function listIndices(string $filter = '*'): JSONResponse
+    {
+        $uri = new Uri('/v1/index');
+
+        $req = new JSONRequest('GET', $uri->withQueryValue($uri, 'filter', $filter));
+
+        return $this->http->request($req);
+    }
+
     public function createIndex(string $name, array $body = []): JSONResponse
     {
         $req = new JSONRequest('POST', new Uri("/v1/index/{$name}"), $body);
